@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUI_Intro.MainPage"
+             xmlns:viewmodel="clr-namespace:MAUI_Intro.ViewModel"
+             xmlns:model="clr-namespace:MAUI_Intro.Model"
+             x:DataType="viewmodel:MainPageViewModel">
+    <StackLayout Background="White">
+        <Label Text="{Binding PlayerTurnMessage}" FontSize="28" TextColor="Black" HorizontalOptions="Center" Padding="20" BackgroundColor="Azure"></Label>
+        <VerticalStackLayout VerticalOptions="CenterAndExpand" Padding="20" BackgroundColor="Azure">
+        <CollectionView ItemsSource="{Binding TicTacToeModels}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Span="3" Orientation="Vertical" VerticalItemSpacing="20" HorizontalItemSpacing="20"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:TicTacToeModel">
+                    <Frame BackgroundColor="LightYellow" Padding="0" CornerRadius="20" HeightRequest="100">
+                        <Label Text="{Binding DisplayText}" FontSize="28" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}},Path=MoveCommand}"
+                                                  CommandParameter="{Binding .}"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        </VerticalStackLayout>
+        <Button BackgroundColor="Azure" BorderColor="Black" BorderWidth="1" CornerRadius="15" VerticalOptions="Center" Text="Reset" TextColor="Black" Command="{Binding ResetCommand}"></Button>
+        <Button BackgroundColor="Azure" BorderColor="Black" BorderWidth="1" CornerRadius="15" VerticalOptions="Center" Text="Highscores" TextColor="Black" Padding="10" Command="{Binding TapCommand}"/>
+    </StackLayout>
+</ContentPage>

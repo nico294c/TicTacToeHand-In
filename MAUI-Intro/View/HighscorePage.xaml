@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUI_Intro.View.HighscorePage"
+             xmlns:viewmodel ="clr-namespace:MAUI_Intro.ViewModel"
+             xmlns:model="clr-namespace:MAUI_Intro.Model"
+             x:DataType="viewmodel:HighscoreViewModel"
+             Title="Highscore Page">
+
+    <Grid RowDefinitions="100, Auto, Auto, *"
+          ColumnDefinitions=".75*, .25*"
+          Padding="10"
+          RowSpacing="10"
+          ColumnSpacing="10"
+          BackgroundColor="White">
+
+        <Image Grid.ColumnSpan="2"
+                Source="dotnet_bot.png"
+                BackgroundColor="AliceBlue"/>
+
+        <Label Grid.Row="1"
+               Text="Add a highscore of: "
+               TextColor="Black"
+               FontSize="21"/>
+        
+        <Label Grid.Column="1"
+               Grid.Row="1"
+               Text="{Binding Highscore}"
+               TextColor="Black"
+               FontSize="21"
+               HorizontalTextAlignment="Center"/>
+
+        <Entry Placeholder="Enter name"
+                Grid.Row="2"
+               Text="{Binding HighscoreName}"
+               TextColor="Black"/>
+
+        <Button Text="Add"
+                Grid.Row="2"
+                Grid.Column="1"
+                TextColor="Black"
+                BackgroundColor="AliceBlue"
+                BorderColor="LightBlue"
+                BorderWidth="1"
+                Command="{Binding AddCommand}"/>
+
+        <CollectionView Grid.Row="3" Grid.ColumnSpan="2"
+                        ItemsSource="{Binding Highscores}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:HighscoreModel">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Delete"
+                                       BackgroundColor="Red"
+                                       Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewmodel:HighscoreViewModel}}, Path=DeleteCommand}"
+                                       CommandParameter="{Binding .}"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Grid Padding="0,5">
+                            <Frame>
+                                <Label Text="{Binding .}"
+                                       FontSize="24"
+                                       TextColor="Black"/>
+                            </Frame>
+                        </Grid>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        
+    </Grid>
+
+</ContentPage>
